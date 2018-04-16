@@ -6,6 +6,8 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gowww/router"
+	"github.com/julienschmidt/httprouter"
 	"github.com/labstack/echo"
 )
 
@@ -624,4 +626,100 @@ func BenchmarkGinParseAPI(b *testing.B) {
 	g := gin.New()
 	loadGinRoutes(g, parseAPI)
 	benchmarkRoutes(b, g, parseAPI)
+}
+
+func loadHTTPRouterRoutes(rt *httprouter.Router, routes []*Route) {
+	for _, r := range routes {
+		switch r.Method {
+		case "GET":
+			rt.GET(r.Path, httpRouterHandler(r.Method, r.Path))
+		case "POST":
+			rt.POST(r.Path, httpRouterHandler(r.Method, r.Path))
+		case "PATCH":
+			rt.PATCH(r.Path, httpRouterHandler(r.Method, r.Path))
+		case "PUT":
+			rt.PUT(r.Path, httpRouterHandler(r.Method, r.Path))
+		case "DELETE":
+			rt.DELETE(r.Path, httpRouterHandler(r.Method, r.Path))
+		}
+	}
+}
+
+func httpRouterHandler(method, path string) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	}
+}
+
+func BenchmarkHTTPRouterStatic(b *testing.B) {
+	r := httprouter.New()
+	loadHTTPRouterRoutes(r, static)
+	benchmarkRoutes(b, r, static)
+}
+
+func BenchmarkHTTPRouterGitHubAPI(b *testing.B) {
+	r := httprouter.New()
+	loadHTTPRouterRoutes(r, githubAPI)
+	benchmarkRoutes(b, r, githubAPI)
+}
+
+func BenchmarkHTTPRouterGplusAPI(b *testing.B) {
+	r := httprouter.New()
+	loadHTTPRouterRoutes(r, gplusAPI)
+	benchmarkRoutes(b, r, gplusAPI)
+}
+
+func BenchmarkHTTPRouterParseAPI(b *testing.B) {
+	r := httprouter.New()
+	loadHTTPRouterRoutes(r, parseAPI)
+	benchmarkRoutes(b, r, parseAPI)
+}
+
+func loadRouterRoutes(rt *router.Router, routes []*Route) {
+	for _, r := range routes {
+		switch r.Method {
+		case "GET":
+			rt.Get(r.Path, routerHandler(r.Method, r.Path))
+		case "POST":
+			rt.Post(r.Path, routerHandler(r.Method, r.Path))
+		case "PATCH":
+			rt.Patch(r.Path, routerHandler(r.Method, r.Path))
+		case "PUT":
+			rt.Put(r.Path, routerHandler(r.Method, r.Path))
+		case "DELETE":
+			rt.Delete(r.Path, routerHandler(r.Method, r.Path))
+		}
+	}
+}
+
+func routerHandler(method, path string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	}
+}
+
+func BenchmarkRouterStatic(b *testing.B) {
+	r := router.New()
+	loadRouterRoutes(r, static)
+	benchmarkRoutes(b, r, static)
+}
+
+func BenchmarkRouterGitHubAPI(b *testing.B) {
+	r := router.New()
+	loadRouterRoutes(r, githubAPI)
+	benchmarkRoutes(b, r, githubAPI)
+}
+
+func BenchmarkRouterGplusAPI(b *testing.B) {
+	r := router.New()
+	loadRouterRoutes(r, gplusAPI)
+	benchmarkRoutes(b, r, gplusAPI)
+}
+
+func BenchmarkRouterParseAPI(b *testing.B) {
+	r := router.New()
+	loadRouterRoutes(r, parseAPI)
+	benchmarkRoutes(b, r, parseAPI)
 }
