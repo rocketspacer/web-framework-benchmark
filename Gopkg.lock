@@ -20,8 +20,8 @@
 [[projects]]
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "925541529c1fa6821df4e44ce2723319eb2be768"
-  version = "v1.0.0"
+  revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
+  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
@@ -47,8 +47,8 @@
     "color",
     "log"
   ]
-  revision = "6fe1405d73ec4bd4cd8a4ac8e2a2b2bf95d03954"
-  version = "0.2.4"
+  revision = "d6898124de917583f5ff5592ef931d1dfe0ddc05"
+  version = "0.2.6"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
@@ -87,13 +87,13 @@
     "acme",
     "acme/autocert"
   ]
-  revision = "d6449816ce06963d9d136eee5a56fca5b0616e7e"
+  revision = "a8fb68e7206f8c78be19b432c58eb52a6aa34462"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "2281fa97ef7b0c26324634d5a22f04babdac8713"
+  revision = "6c888cc515d3ed83fc103cf1d84468aad274b0a7"
 
 [[projects]]
   name = "gopkg.in/go-playground/validator.v8"
@@ -110,6 +110,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e80a1fb53001053d6d2780c249f63329b3c4bb14e0a1e3eb4363391d62f36929"
+  inputs-digest = "b2bb53ed64d84b6fd58acc154445b28461f13c41bee71be0b967c34093e49173"
   solver-name = "gps-cdcl"
   solver-version = 1
